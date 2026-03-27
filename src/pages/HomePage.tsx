@@ -9,15 +9,15 @@ const HomePage: React.FC = () => {
       <section className="hero">
         <div className="container hero-container">
           <div className="hero-content">
-            <div className="hero-script">we speak fluent food</div>
+            <div className="hero-script">we speak fluent sweets</div>
 
             <h1>
-              NO MATTER WHICH CORNER OF THE WORLD <span>it's from.</span>
+              NO MATTER WHICH SWEET CRAVING <span>it&apos;s for.</span>
             </h1>
 
             <p>
-              Freshly cooked global food bowls. From Tokyo to Tuscany, authentic
-              flavours delivered fresh to your everyday.
+              Freshly made Indian homemade sweets. From laddu to kaju delights,
+              authentic traditional flavours delivered fresh to your everyday.
             </p>
 
             <div className="hero-buttons">
@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
           <div className="hero-image">
             <img
               src="https://s3-ap-southeast-1.amazonaws.com/foodvista.1/d6353cd1-843d-4469-a764-0823fe38fdfe.jpg"
-              alt="Fresh, colorful bowls with healthy ingredients"
+              alt="Traditional Indian sweets served in bowls"
             />
             <div className="hero-stat hero-stat-left">
               <strong>7M+</strong>
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
               </p>
               <div className="cta-actions">
                 <a
-                  href="https://play.google.com/store/apps/details?id=com.freshmenu&hl=en_IN"
+                  href="https://play.google.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary btn-large"

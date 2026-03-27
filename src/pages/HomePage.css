@@ -28,7 +28,10 @@
 
   @media (min-width: 1024px) {
     .hero-container {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 64px;
+      padding-top: 72px;
+      padding-bottom: 72px;
     }
   }
 
@@ -43,6 +46,7 @@
 
     @media (min-width: 1024px) {
       text-align: left;
+      max-width: 640px;
     }
 
     .hero-script {
@@ -80,7 +84,7 @@
       }
 
       @media (min-width: 1024px) {
-        font-size: 64px;
+        font-size: 68px;
       }
     }
 
@@ -94,6 +98,8 @@
 
       @media (min-width: 1024px) {
         margin-left: 0;
+        max-width: 560px;
+        font-size: 20px;
       }
 
       @media (max-width: 640px) {
@@ -163,17 +169,28 @@
   .hero-image {
     position: relative;
     border-radius: 20px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    justify-self: end;
+    width: min(100%, 560px);
 
     img {
       width: 100%;
       height: 400px;
       object-fit: cover;
       display: block;
+      border-radius: 20px;
+
+      @media (max-width: 767px) {
+        height: 280px;
+      }
 
       @media (min-width: 768px) {
         height: 500px;
+      }
+
+      @media (min-width: 1280px) {
+        height: 560px;
       }
     }
 
@@ -186,6 +203,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      z-index: 2;
 
       strong {
         font-size: 28px;
@@ -200,17 +218,42 @@
     }
 
     .hero-stat-left {
-      left: -18px;
-      bottom: -18px;
+      left: -14px;
+      bottom: -14px;
     }
 
     .hero-stat-right {
-      top: -18px;
-      right: -18px;
+      top: -14px;
+      right: -14px;
     }
 
     @media (max-width: 1023px) {
-      display: none;
+      display: block;
+
+      .hero-stat-left {
+        left: 12px;
+        bottom: 12px;
+      }
+
+      .hero-stat-right {
+        top: 12px;
+        right: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stat {
+        padding: 10px 12px;
+        border-radius: 12px;
+
+        strong {
+          font-size: 20px;
+        }
+
+        span {
+          font-size: 11px;
+        }
+      }
     }
   }
 }
