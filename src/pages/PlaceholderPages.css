@@ -1,0 +1,140 @@
+.placeholder-page {
+  min-height: calc(100vh - 300px);
+  padding: 48px 16px;
+  background: var(--light-color);
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .content {
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+
+    h2 {
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    p {
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 12px;
+
+      li {
+        padding: 8px 0;
+        font-size: 14px;
+      }
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 16px;
+    }
+  }
+
+  .contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form,
+    .contact-info {
+      background: white;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+
+      h2 {
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        input,
+        textarea {
+          padding: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-md);
+          font-size: 14px;
+          outline: none;
+
+          &:focus {
+            border-color: var(--primary-color);
+          }
+        }
+
+        .btn {
+          text-decoration: none;
+        }
+      }
+
+      p {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .profile-content,
+  .orders-content {
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+
+    p {
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-block;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .placeholder-page {
+    padding: 24px 16px;
+
+    .content {
+      padding: 16px;
+    }
+
+    .contact-content {
+      gap: 16px;
+
+      .contact-form,
+      .contact-info {
+        padding: 16px;
+      }
+    }
+  }
+}

@@ -1,0 +1,270 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid #e5e5e5;
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #2a2a2a;
+  flex-shrink: 0;
+}
+
+.logo-word {
+  font-family: 'Geologica', 'Inter', system-ui, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #2f2f2f;
+}
+
+.logo-word-left {
+  margin-right: -1px;
+}
+
+.logo-emblem {
+  width: 24px;
+  height: 36px;
+  border: 2px solid #f5ce1f;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2px;
+}
+
+.logo-emblem-inner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #f5ce1f;
+  border-radius: 999px;
+  font-family: 'Geologica', 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+  color: #f5ce1f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: lowercase;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-left: auto;
+}
+
+.nav-link {
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 600;
+  color: #1f1f1f;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 8px;
+}
+
+.order-now-btn {
+  height: 36px;
+  border-radius: 6px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5ce1f;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 700;
+  transition: filter 0.2s ease;
+}
+
+.order-now-btn:hover {
+  filter: brightness(0.96);
+}
+
+.cart-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1f1f1f;
+  position: relative;
+}
+
+.cart-icon:hover {
+  background: #f4f4f4;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #e53935;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-link {
+  height: 36px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  color: #1f1f1f;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.signout-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-toggle {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: #1f1f1f;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.menu-toggle:hover {
+  background: #f4f4f4;
+}
+
+@media (max-width: 1024px) {
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .logo-word {
+    font-size: 19px;
+  }
+
+  .logo-emblem {
+    width: 22px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .logo-emblem-inner {
+    width: 13px;
+    height: 13px;
+    font-size: 9px;
+  }
+
+  .nav-link,
+  .order-now-btn,
+  .signin-link {
+    font-size: 14px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .logo-word {
+    font-size: 18px;
+  }
+
+  .logo-emblem {
+    width: 24px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .logo-emblem-inner {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    border-width: 1.5px;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .nav-link {
+    font-size: 17px;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .order-now-btn,
+  .cart-icon,
+  .signin-link {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+}
