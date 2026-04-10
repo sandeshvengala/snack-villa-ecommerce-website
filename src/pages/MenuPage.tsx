@@ -9,43 +9,7 @@ const MenuPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [sortBy, setSortBy] = React.useState('popular');
   const [showAdvancedFilters, setShowAdvancedFilters] = React.useState(false);
-  const [locationLabel, setLocationLabel] = React.useState('Sircilla, Telangana');
-  const [showLocationDropdown, setShowLocationDropdown] = React.useState(false);
-  const locationPickerRef = React.useRef<HTMLDivElement | null>(null);
   const filtersPopoverRef = React.useRef<HTMLDivElement | null>(null);
-
-  const locations = [
-    'Sircilla, Telangana',
-    'Karimnagar, Telangana',
-    'Siddipet, Telangana',
-  ];
-
-  React.useEffect(() => {
-    if (!showLocationDropdown) {
-      return;
-    }
-
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (locationPickerRef.current && !locationPickerRef.current.contains(target)) {
-        setShowLocationDropdown(false);
-      }
-    };
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setShowLocationDropdown(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handlePointerDown);
-    document.addEventListener('keydown', handleEscape);
-
-    return () => {
-      document.removeEventListener('mousedown', handlePointerDown);
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [showLocationDropdown]);
 
   React.useEffect(() => {
     if (!showAdvancedFilters) {
@@ -107,17 +71,6 @@ const MenuPage: React.FC = () => {
 
   const togglePriceSort = () => {
     setSortBy((prev) => (prev === 'price-low' ? 'price-high' : 'price-low'));
-  };
-
-  const handleLocateMe = () => {
-    if (!navigator.geolocation) {
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(() => {
-      setLocationLabel('Current Location');
-      setShowLocationDropdown(false);
-    });
   };
 
   const isPriceSortActive = sortBy === 'price-low' || sortBy === 'price-high';
