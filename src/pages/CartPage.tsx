@@ -1,15 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './CartPage.css';
-import { useCartStore } from '../stores';
+import { useAuthStore, useCartStore } from '../stores';
 import { formatCurrency } from '../utils';
 
 const CartPage: React.FC = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const { items, removeItem, updateQuantity, clearCart, getTotal } = useCartStore();
   const total = getTotal();
   const deliveryFee = items.length > 0 ? 50 : 0;
   const gst = Math.round(total * 0.05); // 5% GST
   const grandTotal = total + deliveryFee + gst;
+
+  if (!isAuthenticated) {
+    return (
+      <div className="cart-page">
+        <div className="empty-cart prelogin-empty-cart">
+          <div className="prelogin-empty-illustration" aria-hidden="true">
+            <svg viewBox="0 0 180 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="88" cy="90" rx="72" ry="14" fill="#E6EAEC" />
+              <rect x="26" y="46" width="24" height="30" rx="4" fill="#B6CCD0" />
+              <rect x="56" y="34" width="34" height="44" rx="5" fill="#7E8E93" />
+              <rect x="97" y="42" width="40" height="32" rx="4" fill="#D1E0E4" />
+              <rect x="105" y="49" width="24" height="18" rx="2" fill="#A8BDC2" />
+              <circle cx="70" cy="82" r="7" fill="#9DB1B6" />
+              <circle cx="116" cy="82" r="7" fill="#9DB1B6" />
+            </svg>
+          </div>
+          <h2>Your Snack Villa Cart is empty</h2>
+          <p>Sign in to see your items, offers, and faster checkout.</p>
+          <div className="prelogin-cart-actions">
+            <Link to="/login?redirect=%2Fcart" className="btn btn-primary">
+              Sign in to your account
+            </Link>
+            <Link to="/login?redirect=%2Fcart&mode=signup" className="btn btn-outline">
+              Sign up now
+            </Link>
+          </div>
+          <Link to="/menu" className="prelogin-deals-link">
+            Explore menu deals
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (

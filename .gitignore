@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -26,3 +27,5 @@ dist-ssr
 # Firebase admin secrets
 serviceAccountKey.json
 **/serviceAccountKey.json
+snack-villa-dd5cb-firebase-adminsdk-fbsvc-b3365c775d.json
+*firebase-adminsdk*.json

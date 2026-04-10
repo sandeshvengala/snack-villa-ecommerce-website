@@ -51,11 +51,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/cart"
-              element={(
-                <ProtectedRoute>
-                  <CartPage />
-                </ProtectedRoute>
-              )}
+              element={<CartPage />}
             />
             <Route
               path="/checkout"

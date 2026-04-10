@@ -45,6 +45,14 @@ const LoginPage: React.FC = () => {
 
   const params = new URLSearchParams(location.search);
   const redirectTo = params.get('redirect') || '/menu';
+  const mode = params.get('mode');
+
+  React.useEffect(() => {
+    if (mode === 'signup') {
+      setAuthMode('email');
+      setEmailMode('signup');
+    }
+  }, [mode]);
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -141,130 +149,140 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="login-page">
-      <div className="login-card card">
-        <h1>Sign In</h1>
-        <p className="login-subtitle">Login to place orders and track your deliveries.</p>
+      <div className="auth-shell">
+        <Link to="/" className="auth-brand" aria-label="Snack Villa home">
+          Snack Villa
+        </Link>
 
-        {!hasFirebaseConfig && (
-          <div className="auth-message warning">
-            Firebase config is missing. Create environment variables before login.
+        <div className="login-card card">
+          <h1>{emailMode === 'signup' ? 'Create account' : 'Sign in'}</h1>
+          <p className="login-subtitle">Access your account to place orders and track deliveries.</p>
+
+          {!hasFirebaseConfig && (
+            <div className="auth-message warning">
+              Firebase config is missing. Create environment variables before login.
+            </div>
+          )}
+
+          <div className="auth-mode-tabs" aria-label="Authentication mode">
+            <button
+              className={`mode-tab ${authMode === 'email' ? 'active' : ''}`}
+              onClick={() => setAuthMode('email')}
+              type="button"
+            >
+              Email & Password
+            </button>
+            <button
+              className={`mode-tab ${authMode === 'phone' ? 'active' : ''}`}
+              onClick={() => setAuthMode('phone')}
+              type="button"
+            >
+              Mobile OTP
+            </button>
           </div>
-        )}
 
-        <div className="auth-mode-tabs" aria-label="Authentication mode">
-          <button
-            className={`mode-tab ${authMode === 'email' ? 'active' : ''}`}
-            onClick={() => setAuthMode('email')}
-            type="button"
-          >
-            Email & Password
-          </button>
-          <button
-            className={`mode-tab ${authMode === 'phone' ? 'active' : ''}`}
-            onClick={() => setAuthMode('phone')}
-            type="button"
-          >
-            Mobile OTP
-          </button>
+          {authMode === 'email' ? (
+            <form onSubmit={handleEmailAuth} className="auth-form">
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  className="form-input"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  className="form-input"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  minLength={6}
+                />
+              </div>
+
+              <button disabled={loading || !hasFirebaseConfig} className="btn btn-primary btn-full" type="submit">
+                {loading ? 'Please wait...' : emailMode === 'signin' ? 'Sign in' : 'Create your Snack Villa account'}
+              </button>
+
+              <button
+                className="switch-mode"
+                type="button"
+                onClick={() => setEmailMode((prev) => (prev === 'signin' ? 'signup' : 'signin'))}
+              >
+                {emailMode === 'signin' ? 'New to Snack Villa? Create account' : 'Already have an account? Sign in'}
+              </button>
+            </form>
+          ) : (
+            <div className="auth-form">
+              <div className="form-group">
+                <label htmlFor="phone">Mobile Number</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  className="form-input"
+                  placeholder="10 digit mobile number"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </div>
+
+              <button
+                className="btn btn-outline btn-full"
+                type="button"
+                onClick={sendOtp}
+                disabled={loading || !hasFirebaseConfig}
+              >
+                {loading ? 'Sending OTP...' : 'Send OTP'}
+              </button>
+
+              {confirmationResult && (
+                <>
+                  <div className="form-group otp-group">
+                    <label htmlFor="otp">OTP</label>
+                    <input
+                      id="otp"
+                      type="text"
+                      className="form-input"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(event) => setOtp(event.target.value)}
+                    />
+                  </div>
+                  <button
+                    className="btn btn-primary btn-full"
+                    type="button"
+                    onClick={verifyOtp}
+                    disabled={loading || !hasFirebaseConfig}
+                  >
+                    {loading ? 'Verifying...' : 'Verify OTP'}
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {message && <p className="auth-message">{message}</p>}
+
+          <div id="recaptcha-container" />
+
+          <p className="go-back-text">
+            Continue browsing from <Link to="/menu">Menu</Link>
+          </p>
+
+          <p className="auth-terms-text">
+            By continuing, you agree to Snack Villa&apos;s Conditions of Use and Privacy Notice.
+          </p>
         </div>
-
-        {authMode === 'email' ? (
-          <form onSubmit={handleEmailAuth} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                className="form-input"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type="password"
-                className="form-input"
-                placeholder="Enter password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-                minLength={6}
-              />
-            </div>
-
-            <button disabled={loading || !hasFirebaseConfig} className="btn btn-primary btn-full" type="submit">
-              {loading ? 'Please wait...' : emailMode === 'signin' ? 'Sign In' : 'Create Account'}
-            </button>
-
-            <button
-              className="switch-mode"
-              type="button"
-              onClick={() => setEmailMode((prev) => (prev === 'signin' ? 'signup' : 'signin'))}
-            >
-              {emailMode === 'signin' ? 'New here? Create account' : 'Already have an account? Sign in'}
-            </button>
-          </form>
-        ) : (
-          <div className="auth-form">
-            <div className="form-group">
-              <label htmlFor="phone">Mobile Number</label>
-              <input
-                id="phone"
-                type="tel"
-                className="form-input"
-                placeholder="10 digit mobile number"
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-              />
-            </div>
-
-            <button
-              className="btn btn-outline btn-full"
-              type="button"
-              onClick={sendOtp}
-              disabled={loading || !hasFirebaseConfig}
-            >
-              {loading ? 'Sending OTP...' : 'Send OTP'}
-            </button>
-
-            {confirmationResult && (
-              <>
-                <div className="form-group otp-group">
-                  <label htmlFor="otp">OTP</label>
-                  <input
-                    id="otp"
-                    type="text"
-                    className="form-input"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(event) => setOtp(event.target.value)}
-                  />
-                </div>
-                <button
-                  className="btn btn-primary btn-full"
-                  type="button"
-                  onClick={verifyOtp}
-                  disabled={loading || !hasFirebaseConfig}
-                >
-                  {loading ? 'Verifying...' : 'Verify OTP'}
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
-        {message && <p className="auth-message">{message}</p>}
-
-        <div id="recaptcha-container" />
-
-        <p className="go-back-text">
-          Continue browsing from <Link to="/menu">Menu</Link>
-        </p>
       </div>
     </div>
   );

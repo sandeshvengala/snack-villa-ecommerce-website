@@ -44,8 +44,8 @@ const HomePage: React.FC = () => {
 
           <div className="hero-image">
             <img
-              src="https://s3-ap-southeast-1.amazonaws.com/foodvista.1/d6353cd1-843d-4469-a764-0823fe38fdfe.jpg"
-              alt="Traditional Indian sweets served in bowls"
+              src="/images/products/items/appalu-combo.png"
+              alt="Traditional Indian sweets and snacks served in bowls"
             />
             <div className="hero-stat hero-stat-left">
               <strong>7M+</strong>

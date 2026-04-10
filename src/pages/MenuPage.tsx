@@ -2,13 +2,12 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import './MenuPage.css';
 import ProductCard from '../components/ProductCard';
-import { categories, products } from '../data/products';
+import { products } from '../data/products';
 
 const MenuPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [sortBy, setSortBy] = React.useState('popular');
-  const [dietFilter, setDietFilter] = React.useState<'all' | 'veg' | 'non-veg'>('all');
   const [showAdvancedFilters, setShowAdvancedFilters] = React.useState(false);
   const [locationLabel, setLocationLabel] = React.useState('Sircilla, Telangana');
   const [showLocationDropdown, setShowLocationDropdown] = React.useState(false);
@@ -99,18 +98,9 @@ const MenuPage: React.FC = () => {
     filteredProducts.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
   }
 
-  const handleCategoryChange = (category: string | null) => {
-    if (category) {
-      setSearchParams({ category });
-    } else {
-      setSearchParams({});
-    }
-  };
-
   const resetAllFilters = () => {
     setSearchQuery('');
     setSortBy('popular');
-    setDietFilter('all');
     setShowAdvancedFilters(false);
     setSearchParams({});
   };
@@ -144,6 +134,7 @@ const MenuPage: React.FC = () => {
         </div>
       </section>
 
+      {/*
       <section className="menu-info-strip py-3 bg-muted border-b" aria-label="Menu offer strip">
         <div className="menu-strip-inner">
           <div className="location-strip-row">
@@ -209,10 +200,12 @@ const MenuPage: React.FC = () => {
           </div>
         </div>
       </section>
+      */}
 
       <section className="menu-utility-strip py-4 border-b" aria-label="Menu controls strip">
         <div className="menu-strip-inner">
           <div className="quick-filters-row" ref={filtersPopoverRef}>
+            {/*
             <div className="diet-button-group">
               <button
                 className={`diet-btn ${dietFilter === 'veg' ? 'active veg' : ''}`}
@@ -234,6 +227,7 @@ const MenuPage: React.FC = () => {
                 <span className="text-sm show-sm">NV</span>
               </button>
             </div>
+            */}
 
             <button className={`quick-action-btn price-btn ${isPriceSortActive ? 'active' : ''}`} onClick={togglePriceSort}>
               <span className="hidden-sm">Price</span>
@@ -317,25 +311,16 @@ const MenuPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="menu-category-strip py-8 border-b hidden md:block" aria-label="Menu category strip">
-        <div className="menu-strip-inner menu-category-row">
-          <button
-            className={`menu-chip ${!selectedCategory ? 'active' : ''}`}
-            onClick={() => handleCategoryChange(null)}
-          >
-            All Categories
-          </button>
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              className={`menu-chip ${selectedCategory === category.name ? 'active' : ''}`}
-              onClick={() => handleCategoryChange(category.name)}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
-      </section>
+      {/*
+      Category list kept in comments as requested:
+      - All Categories
+      - Laddus / Sweet Balls
+      - Sweets (General)
+      - Spicy Snacks (Namkeen)
+      - Chips & Crispy Items
+      - Traditional / Homemade Specials
+      - Combo Packs
+      */}
 
       <main id="menu-container" className="menu-container py-8">
         <div className="menu-content">

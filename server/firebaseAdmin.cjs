@@ -1,7 +1,15 @@
 const path = require('node:path');
+const fs = require('node:fs');
 const admin = require('firebase-admin');
 
-const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
+const defaultServiceAccountPath = path.resolve(
+  __dirname,
+  '../snack-villa-dd5cb-firebase-adminsdk-fbsvc-b3365c775d.json'
+);
+
+const serviceAccountPath =
+  process.env.FIREBASE_SERVICE_ACCOUNT_PATH ||
+  (fs.existsSync(defaultServiceAccountPath) ? defaultServiceAccountPath : '');
 
 if (!serviceAccountPath) {
   console.error('Missing FIREBASE_SERVICE_ACCOUNT_PATH in environment.');
