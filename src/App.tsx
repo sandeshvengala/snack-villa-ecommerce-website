@@ -18,9 +18,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import {
   AboutPage,
   ContactPage,
-  OrdersPage,
   NotFoundPage,
 } from './pages/PlaceholderPages';
+import OrdersPage from './pages/OrdersPage';
 import { auth } from './lib/firebase';
 import { useAuthStore } from './stores';
 import { mapFirebaseUserToAppUser } from './utils/auth';
