@@ -2,39 +2,37 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './OrderConfirmationPage.css';
 import { formatCurrency, formatDeliveryTime } from '../utils';
+import { useOrderStore } from '../stores';
 
 const OrderConfirmationPage: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
-  const [order] = React.useState(() => {
-    // In real app, fetch from store/API
-    return {
-      id: orderId || 'ORD-1234567890',
-      status: 'confirmed' as const,
-      createdAt: new Date(),
-      estimatedDelivery: new Date(Date.now() + 30 * 60000),
-      items: [
-        {
-          id: '1',
-          product: {
-            id: 'donut-1',
-            name: 'Glazed Chocolate Donut',
-            price: 49,
-            image: 'https://images.unsplash.com/photo-1585080872051-9d70bc05e603?w=100&h=100&fit=crop',
-            category: 'Donuts',
-            rating: 4.8,
-            reviews: 100,
-            tags: [],
-            description: 'Rich chocolate donut',
-          },
-          quantity: 2,
-        },
-      ],
-      total: 98,
-      deliveryFee: 50,
-      gst: 7,
-      grandTotal: 155,
-    };
-  });
+  const getOrderById = useOrderStore((state) => state.getOrderById);
+  const currentOrder = useOrderStore((state) => state.currentOrder);
+
+  const order = React.useMemo(() => {
+    if (orderId) {
+      return getOrderById(orderId);
+    }
+    return currentOrder;
+  }, [orderId, currentOrder, getOrderById]);
+
+  if (!order) {
+    return (
+      <div className="confirmation-page">
+        <div className="container">
+          <div className="confirmation-card">
+            <h1>Order not found</h1>
+            <p>We could not find that order. Please check your order history.</p>
+            <Link to="/orders" className="btn btn-primary">Go to My Orders</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const deliveryFee = 50;
+  const gst = Math.round(order.total * 0.05);
+  const grandTotal = order.total + deliveryFee + gst;
 
   const deliveryTime = order.estimatedDelivery
     ? formatDeliveryTime(order.estimatedDelivery)
@@ -85,15 +83,15 @@ const OrderConfirmationPage: React.FC = () => {
               </div>
               <div className="breakdown-row">
                 <span>Delivery Fee</span>
-                <span>{formatCurrency(order.deliveryFee)}</span>
+                <span>{formatCurrency(deliveryFee)}</span>
               </div>
               <div className="breakdown-row">
                 <span>GST</span>
-                <span>{formatCurrency(order.gst)}</span>
+                <span>{formatCurrency(gst)}</span>
               </div>
               <div className="breakdown-row total">
                 <span>Total</span>
-                <span>{formatCurrency(order.grandTotal)}</span>
+                <span>{formatCurrency(grandTotal)}</span>
               </div>
             </div>
           </div>
@@ -126,15 +124,6 @@ const OrderConfirmationPage: React.FC = () => {
                 <p className="step-label">Delivered</p>
               </div>
             </div>
-          </div>
-
-          <div className="what-next">
-            <h3>What's Next?</h3>
-            <ul>
-              <li>📱 You'll receive SMS updates on your order status</li>
-              <li>💬 Chat with our support if you have any questions</li>
-              <li>⏰ Track your order in real-time</li>
-            </ul>
           </div>
 
           <div className="action-buttons">

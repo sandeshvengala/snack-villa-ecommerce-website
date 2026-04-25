@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
 
           <div className="hero-image">
             <img
-              src="/images/products/items/appalu-combo.png"
+              src="/images/products/items/snack-combo.svg"
               alt="Traditional Indian sweets and snacks served in bowls"
             />
             <div className="hero-stat hero-stat-left">

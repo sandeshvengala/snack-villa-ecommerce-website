@@ -90,16 +90,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }),
 }));
 
-export const useOrderStore = create<OrderStore>((set) => ({
+export const useOrderStore = create<OrderStore>((set, get) => ({
   orders: [],
   currentOrder: null,
   addOrder: (order) =>
     set((state) => ({
-      orders: [...state.orders, order],
+      orders: [order, ...state.orders],
     })),
   setCurrentOrder: (order) => set({ currentOrder: order }),
   getOrderById: (orderId) => {
-    const state = JSON.parse(JSON.stringify({ orders: [] }));
-    return state.orders.find((order: Order) => order.id === orderId);
+    const state = get();
+    return state.orders.find((order) => order.id === orderId);
   },
 }));
